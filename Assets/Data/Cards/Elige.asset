@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f48ffe5cd49f2f42b64e6eb21f60b95, type: 3}
+  m_Name: Elige
+  m_EditorClassIdentifier: 
+  _description: "\xA1Al que quieras!"
+  _image: {fileID: 877594099722171665, guid: 2c8e58454b6f8794d85faefdaeaea246, type: 3}

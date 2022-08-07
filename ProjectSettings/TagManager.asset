@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ground
+    uniqueID: 1435381759
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Cards
+    uniqueID: 3651705455
     locked: 0
