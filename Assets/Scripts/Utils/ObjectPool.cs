@@ -7,6 +7,7 @@ public class ObjectPool
     // Pools for objects
     private Queue<GameObject> pool = new Queue<GameObject>();
 
+
     public ObjectPool(GameObject prefab, int instances, GameObject parent)
     {
         // Put information about our pools to Dictionary
@@ -15,13 +16,16 @@ public class ObjectPool
             GameObject go = UnityEngine.Object.Instantiate(prefab);
             go.transform.parent = parent.transform;
             pool.Enqueue(go);
-            go.SetActive(false);
         }
+    }
+
+    public int PoolSize()
+    {
+        return pool.Count;
     }
 
     public GameObject GetObject()
     {
-        // If there are free object in pool return it
         if(pool.Count > 0)
         {
             return pool.Dequeue();

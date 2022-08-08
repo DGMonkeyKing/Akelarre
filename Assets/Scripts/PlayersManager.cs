@@ -11,6 +11,10 @@ public class PlayersManager : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
 
+    [Header("References to game")]
+    [SerializeField]
+    private Deck _deck;
+
     [Header("Previsualization and Gizmo")]
     [SerializeField]
     private int NoP = 6;
@@ -46,8 +50,8 @@ public class PlayersManager : MonoBehaviour
         Gizmos.DrawSphere(Vector3.zero, radiusOfAkelarre);
     }
 
-
-    private ObjectPool OP;
+    [SerializeField]
+    private List<Player> allPlayers;
     private List<Player> players;
     private int numberOfPlayers;
 
@@ -55,13 +59,10 @@ public class PlayersManager : MonoBehaviour
     {
         numberOfPlayers = PlayerPrefs.GetInt(GameData.NUMBER_OF_PLAYERS, 4);
         players = new List<Player>();
-        OP = new ObjectPool(playerPrefab, 8, gameObject);
 
         for(int i = 0; i < numberOfPlayers; i++)
         {
-            GameObject go = OP.GetObject();
-            players.Add(go.GetComponent<Player>());
-            go.SetActive(true);
+            players.Add(allPlayers[i]);
         }
 
         //Recolocar los jugadores que vamos a usar.
@@ -116,6 +117,11 @@ public class PlayersManager : MonoBehaviour
         {
             p.onCardPlayed -= OnCardPlayed;
         }
+    }
+
+    public void PlayerGetCard()
+    {
+        players[0].DrawCard(_deck.DrawCard());
     }
 
     void OnCardPlayed(Player player, Card card)

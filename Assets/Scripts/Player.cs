@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private List<Card> listOfCards = new List<Card>();
     private float drawPosition = 0f;
 
+    [SerializeField]
+    private GameObject cardGrabber;
+
 
     public delegate void OnCardPlayed(Player player, Card card);
     public event OnCardPlayed onCardPlayed;
@@ -31,7 +34,7 @@ public class Player : MonoBehaviour
 
     public void DrawCard(Card card)
     {
-        card.transform.SetParent(transform);
+        card.transform.SetParent(cardGrabber.transform);
         card.transform.localPosition = new Vector3(drawPosition, -1.5f, 4.43f);
 
         OrderHand(card, true);

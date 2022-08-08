@@ -5,18 +5,11 @@ using UnityEngine;
 
 public class TestManager : Singleton<TestManager>
 {
-    public Player player;
-    public Card cardPrefab;
+    public PlayersManager PM;
 
     public void NewRandomCard()
     {
-        Card card = Instantiate(cardPrefab);
-
-        Cards[] cardTypes = GetAllInstances<Cards>();
-        Cards choosen = cardTypes[Random.Range(0, cardTypes.Length)];
-        card.CardData = choosen;
-
-        player.DrawCard(card);
+        PM.PlayerGetCard();
     }
 
     private static T[] GetAllInstances<T>() where T : ScriptableObject
