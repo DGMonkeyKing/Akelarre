@@ -5,18 +5,12 @@ using UnityEngine.InputSystem;
 public static class MousePointer
 {
     public static bool useNewSystem = true;
-    public static float RaycastLength = 6f;
+    public static float RaycastLength = 10f;
 
     public static bool GetLeftButtonClickedThisFrame()
     {
-        if(useNewSystem)
-        {
-            return false;
-        }
-        else
-        {
-            return false;
-        }
+        if(useNewSystem) return Mouse.current.leftButton.wasPressedThisFrame;
+        else return Input.GetMouseButtonDown(0);
     }
 
     public static float2 GetScreenPosition()

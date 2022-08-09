@@ -381,11 +381,6 @@ MonoBehaviour:
   cardTextRenderer: {fileID: 427486925344196564}
   overMaterial: {fileID: 2100000, guid: 395c3fa4e68f2234a9c47d46cf7e36b3, type: 2}
   notOverMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  orderMovementTime: 0.2
-  drawMovementTime: 0.3
-  playMovementTime: 0.3
-  onOverMovementTime: 0.2
-  onExitMovementTime: 0.2
 --- !u!65 &1376126189494950322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -397,5 +392,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9375, y: 1.296875, z: 0.08}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9375, y: 2.49, z: 0.08}
+  m_Center: {x: 0, y: -0.59, z: 0}

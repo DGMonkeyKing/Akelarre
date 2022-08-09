@@ -127,6 +127,6 @@ public class PlayersManager : MonoBehaviour
     void OnCardPlayed(Player player, Card card)
     {
         //Ejecutamos el efecto de la carta
-        card.CardEffect(player, players);
+        //card.CardEffect(player, players);
     }
 }

@@ -1,57 +1,63 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite mouseSprite;
-    private SpriteRenderer _spriteRenderer;
+    List<Collider> currentHits = new List<Collider>();
+    List<Collider> lastHits = new List<Collider>();
+    List<Collider> lastHitsToRemove = new List<Collider>();
 
-    Vector3 mousePosition;
-    Vector3 mouseWorldPosition;
-
-    private Camera camera = null;
-
-    
-    public GameObject cube;
-
-    void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        camera = Camera.main;
-
-        mousePosition = Mouse.current.position.ReadValue();
-
-        _spriteRenderer.sprite = mouseSprite;
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = MousePointer.GetWorldRay(Camera.main);
 
-        Debug.Log(mousePosition);
-/*  
-        Ray ray = camera.ScreenPointToRay(mousePosition);
-        RaycastHit hit;
+        RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, MousePointer.RaycastLength);
 
-        if(Physics.Raycast(ray, out hit))
+        foreach(RaycastHit hit in hits)
         {
-
+            currentHits.Add(hit.collider);
         }
 
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        Debug.Log(currentHits.Count);
+        
+        // Tenemos algún hit del frame anterior?
+        if(lastHits.Count > 0)
         {
-            
+            foreach(Collider hit in lastHits)
+            {
+                // Si ese hit del frame anterior no está en los current, entonces se ha salido.
+                if(!currentHits.Contains(hit))
+                {
+                    hit.transform.GetComponent<AbstractInteractable>().OnExit();
+                    Debug.Log("ON EXIT");
+                    lastHitsToRemove.Add(hit); // Añadimo a lista temporal para luego borrar.
+                }
+            }
+
+            lastHits.RemoveAll( h => lastHitsToRemove.Contains(h) ); //Borramos todos los contenidos en TMP
         }
-*/
+
+        if(currentHits.Count > 0) //Hay hit
+        {
+            foreach(Collider hit in currentHits)
+            {
+                //Estamos encima de un nuevo objeto interactable.
+                if(!lastHits.Contains(hit)) 
+                {
+                    hit.transform.GetComponent<AbstractInteractable>().OnOver();
+                    Debug.Log("ON OVER");
+                    lastHits.Add(hit);
+                }
+                //Hemos clickado estando encima de un objeto interactable.
+                /*if(lastHits.Contains(hit) && MousePointer.GetLeftButtonClickedThisFrame())
+                {
+                    hit.transform.GetComponent<AbstractInteractable>().OnClick();
+                    lastHits.Remove(hit);
+                }*/
+            }
+        }
+
+        lastHitsToRemove.Clear();
+        currentHits.Clear();
     }
-    
 }

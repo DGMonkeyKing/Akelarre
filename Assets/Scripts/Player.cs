@@ -12,22 +12,30 @@ public class Player : MonoBehaviour
     private float drawPosition = 0f;
 
     [SerializeField]
-    private GameObject cardGrabber;
+    private CardGrabber cardGrabber;
 
 
     public delegate void OnCardPlayed(Player player, Card card);
     public event OnCardPlayed onCardPlayed;
     
+    private void OnEnable() {
+    }
+
+    private void OnDisable() {
+        
+    }
 
     public void PlayCard(Card card)
     {
-        card.PlayAnimation();
+        //card.PlayAnimation();
         listOfCards.Remove(card);
         OrderHand(card, false);
 
         //Reset value
         card.transform.SetParent(null);
         onCardPlayed(this, card);
+
+        //card.onCardChoosen -= PlayCard;
 
         drawPosition += 0.35f;
     }
@@ -36,10 +44,12 @@ public class Player : MonoBehaviour
     {
         card.transform.SetParent(cardGrabber.transform);
         card.transform.localPosition = new Vector3(drawPosition, -1.5f, 4.43f);
+        cardGrabber.DrawCard(card);
+        //card.onCardChoosen += PlayCard;
 
         OrderHand(card, true);
         listOfCards.Add(card);
-        card.DrawAnimation();
+        //card.DrawAnimation();
 
         drawPosition -= 0.35f;
     }
@@ -49,7 +59,7 @@ public class Player : MonoBehaviour
         //Modificar el valor de la X para colocar las cartas y que sean visibles
         foreach(Card c in listOfCards)
         {
-            c.MoveAnimation(isDraw);
+            //c.MoveAnimation(isDraw);
         }
     }
 
